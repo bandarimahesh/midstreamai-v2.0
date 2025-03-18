@@ -3,7 +3,10 @@ import ContactForm from "./ContactForm/ContactForm";
 
 export const Contact: React.FC = () => {
   return (
-    <section id="contact" className="py-8 sm:py-8 lg:py-10 bg-white">
+    <section
+      id="contact"
+      className="py-8 sm:py-8 lg:py-10 from-primary-50 bg-gradient-to-br to-white"
+    >
       <div className="container mx-auto">
         <div className="text-center">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-normal text-gray-900">

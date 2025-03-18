@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AlertCircle, Box, BookOpen, GitCompare } from "lucide-react";
+import { AlertCircle, Box, BookOpen, GitCompare, Monitor } from "lucide-react";
 import GoToTop from "../components/Utils/GoToTop";
 
 export const ServicesPage: React.FC = () => {
@@ -104,6 +104,33 @@ export const ServicesPage: React.FC = () => {
         },
       ],
     },
+    "Pipeline Digital Twin": {
+      icon: <Monitor className="h-8 w-8" />,
+      description:
+        "A real-time virtual copy of your pipeline system, giving you the insights to prevent problems, run things smoother, and reduce risks.",
+      subServices: [
+        {
+          name: "Real-Time Monitoring",
+          description:
+            "Continuous, real-time visibility into pipeline health and performance metrics.",
+        },
+        {
+          name: "Predictive Maintenance",
+          description:
+            "Forecast equipment failures and optimize maintenance schedules for reduced downtime and costs.",
+        },
+        {
+          name: "Operational Efficiency",
+          description:
+            "Optimize pipeline throughput and reduce energy consumption with real-time insights into key performance indicators (KPIs).",
+        },
+        {
+          name: "SCADA & IoT Integration",
+          description:
+            "Seamlessly integrate data from SCADA, IoT, and other sources for a unified pipeline view.",
+        },
+      ],
+    },
     "Operator Training Simulator": {
       icon: <BookOpen className="h-8 w-8" />,
       description:
@@ -140,6 +167,8 @@ export const ServicesPage: React.FC = () => {
       case "Batch Management":
         return "bg-primary-50";
       case "Product Compatibility":
+        return "bg-primary-50";
+      case "Pipeline Digital Twin":
         return "bg-primary-50";
       case "Operator Training Simulator":
         return "bg-primary-50";

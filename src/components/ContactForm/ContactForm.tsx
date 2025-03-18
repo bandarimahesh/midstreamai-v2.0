@@ -88,7 +88,7 @@ const ContactForm = () => {
         <FadingDots />
       ) : (
         <div className="form-container py-5">
-          <div className="form-content ">
+          <div className="form-content bg-gradient-to-br from-primary-50 to-white">
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label>Name</label>
@@ -125,7 +125,7 @@ const ContactForm = () => {
                   />
                 </div>
                 <div className="form-group w100">
-                  <label>Mobile Number</label>
+                  <label>Mobile </label>
                   <PhoneInput
                     placeholder="Your Phone Number"
                     value={formData.mobile}

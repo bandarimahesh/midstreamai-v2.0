@@ -14,8 +14,8 @@
   overflow: hidden;
   padding: 40px 60px 30px 60px;
   border-radius: 10px;
-  --tw-bg-opacity: 1;
-  background-color: rgb(240 253 244 / var(--tw-bg-opacity));
+  /* --tw-bg-opacity: 1;
+  background-color: rgb(240 253 244 / var(--tw-bg-opacity)); */
 }
 .contact-us-title {
   font-size: 38px;
