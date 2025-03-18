@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 export const PipelineDiagram: React.FC = () => {
   const [flowOffset, setFlowOffset] = useState(0);
   const [pressure, setPressure] = useState(75);
+  const [hoveredElement, setHoveredElement] = useState<{ type: string; x: number; y: number } | null>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -12,11 +13,18 @@ export const PipelineDiagram: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const handleMouseEnter = (type: string, x: number, y: number) => {
+    setHoveredElement({ type, x, y });
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredElement(null);
+  };
+
   return (
     <div className="relative w-full h-full p-6 rounded-xl">
       <svg className="w-full h-full" viewBox="0 0 900 500">
         <defs>
-          {/* Define paths for flow animations */}
           <path
             id="mainPipePath"
             d="M 50,200 L 850,200"
@@ -24,12 +32,12 @@ export const PipelineDiagram: React.FC = () => {
           />
           <path
             id="sourceTankPath"
-            d="M 50,160 C 50,170 50,180 50,200"
+            d="M 50,120 C 50,150 50,180 50,200"
             fill="none"
           />
           <path
             id="destTankPath"
-            d="M 850,200 C 850,180 850,170 850,160"
+            d="M 850,200 C 850,180 850,150 850,120"
             fill="none"
           />
           {[250, 600].map((x, i) => (
@@ -67,8 +75,8 @@ export const PipelineDiagram: React.FC = () => {
 
         {/* Storage Tanks */}
         {[
-          { x: 50, y: 120, type: "source", level: 85, label: "Source" },
-          { x: 850, y: 120, type: "destination", level: 45, label: "Destination" },
+          { x: 50, y: 80, type: "source", level: 85, label: "Source" },
+          { x: 850, y: 80, type: "destination", level: 45, label: "Destination" },
           { x: 250, y: 320, type: "delivery", level: 60, label: "Intermediate Delivery" },
           { x: 600, y: 320, type: "delivery", level: 70, label: "Intermediate Delivery" }
         ].map((station, index) => (
@@ -132,9 +140,97 @@ export const PipelineDiagram: React.FC = () => {
           </g>
         ))}
 
-        {/* Pump Station */}
-        <g transform="translate(400,200)">
-          <circle r="15" fill="white" stroke="#16a34a" strokeWidth="2" />
+        {/* Source Pump */}
+        <g 
+          transform={`translate(50,200)`}
+          onMouseEnter={() => handleMouseEnter("Pump", 50, 200)}
+          onMouseLeave={handleMouseLeave}
+          style={{ cursor: 'pointer' }}
+        >
+          <circle
+            r="12"
+            fill="white"
+            stroke="#16a34a"
+            strokeWidth="2"
+          />
+          <path
+            d="M -8,0 C -8,-8 8,8 8,0 C 8,-8 -8,8 -8,0"
+            fill="none"
+            stroke="#16a34a"
+            strokeWidth="2"
+          >
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              from="0 0 0"
+              to="360 0 0"
+              dur="1s"
+              repeatCount="indefinite"
+            />
+          </path>
+        </g>
+
+        {/* Source Control Valve */}
+        <g 
+          transform={`translate(80,200)`}
+          onMouseEnter={() => handleMouseEnter("Control Valve", 80, 200)}
+          onMouseLeave={handleMouseLeave}
+          style={{ cursor: 'pointer' }}
+        >
+          <rect
+            x="-10"
+            y="-10"
+            width="20"
+            height="20"
+            fill="white"
+            stroke="#16a34a"
+            strokeWidth="2"
+            rx="2"
+          />
+          <path
+            d="M -6,-6 L 6,6 M -6,6 L 6,-6"
+            stroke="#16a34a"
+            strokeWidth="2"
+          />
+        </g>
+
+        {/* Source Area Pressure */}
+        <g 
+          transform={`translate(110,180)`}
+          onMouseEnter={() => handleMouseEnter("Pressure", 110, 180)}
+          onMouseLeave={handleMouseLeave}
+          style={{ cursor: 'pointer' }}
+        >
+          <circle r="12" fill="white" stroke="#16a34a" strokeWidth="2" />
+          <path
+            d="M 0,0 L 0,-10"
+            stroke="#ef4444"
+            strokeWidth="2"
+          >
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              values={`${-45 + pressure};${-45 + pressure + 5};${-45 + pressure}`}
+              dur="1s"
+              repeatCount="indefinite"
+            />
+          </path>
+          <circle r="2" fill="#ef4444" />
+        </g>
+
+        {/* Main Pump Station */}
+        <g 
+          transform={`translate(400,200)`}
+          onMouseEnter={() => handleMouseEnter("Pump Station", 400, 200)}
+          onMouseLeave={handleMouseLeave}
+          style={{ cursor: 'pointer' }}
+        >
+          <circle
+            r="12"
+            fill="white"
+            stroke="#16a34a"
+            strokeWidth="2"
+          />
           <path
             d="M -8,0 C -8,-8 8,8 8,0 C 8,-8 -8,8 -8,0"
             fill="none"
@@ -152,7 +248,7 @@ export const PipelineDiagram: React.FC = () => {
           </path>
           <text
             x="0"
-            y="-25"
+            y="35"
             textAnchor="middle"
             className="text-sm font-medium fill-gray-700"
           >
@@ -160,36 +256,150 @@ export const PipelineDiagram: React.FC = () => {
           </text>
         </g>
 
-        {/* Control Valves */}
-        {[200, 700].map((x, index) => (
-          <g key={`valve-${index}`} transform={`translate(${x},200)`}>
+        {/* Delivery Line Control Valves */}
+        {[250, 600].map((x, index) => (
+          <g 
+            key={`delivery-valve-${index}`} 
+            transform={`translate(${x},220)`}
+            onMouseEnter={() => handleMouseEnter("Control Valve", x, 220)}
+            onMouseLeave={handleMouseLeave}
+            style={{ cursor: 'pointer' }}
+          >
             <rect
-              x="-15"
-              y="-15"
-              width="30"
-              height="30"
+              x="-10"
+              y="-10"
+              width="20"
+              height="20"
               fill="white"
               stroke="#16a34a"
               strokeWidth="2"
-              rx="4"
+              rx="2"
             />
             <path
-              d="M -8,-8 L 8,8 M -8,8 L 8,-8"
+              d="M -6,-6 L 6,6 M -6,6 L 6,-6"
               stroke="#16a34a"
               strokeWidth="2"
             />
-            <text
-              x="0"
-              y="-25"
-              textAnchor="middle"
-              className="text-sm font-medium fill-gray-700"
-            >
-              Control Valve
-            </text>
           </g>
         ))}
 
-        {/* Flow Animation - Main Line */}
+        {/* Destination area valve */}
+        <g 
+          transform={`translate(850,200)`}
+          onMouseEnter={() => handleMouseEnter("Control Valve", 850, 200)}
+          onMouseLeave={handleMouseLeave}
+          style={{ cursor: 'pointer' }}
+        >
+          <rect
+            x="-10"
+            y="-10"
+            width="20"
+            height="20"
+            fill="white"
+            stroke="#16a34a"
+            strokeWidth="2"
+            rx="2"
+          />
+          <path
+            d="M -6,-6 L 6,6 M -6,6 L 6,-6"
+            stroke="#16a34a"
+            strokeWidth="2"
+          />
+        </g>
+
+        {/* Main pump station pressures */}
+        {[375, 425].map((x, index) => (
+          <g 
+            key={`pump-pressure-${index}`} 
+            transform={`translate(${x},180)`}
+            onMouseEnter={() => handleMouseEnter("Pressure", x, 180)}
+            onMouseLeave={handleMouseLeave}
+            style={{ cursor: 'pointer' }}
+          >
+            <circle r="12" fill="white" stroke="#16a34a" strokeWidth="2" />
+            <path
+              d="M 0,0 L 0,-10"
+              stroke="#ef4444"
+              strokeWidth="2"
+            >
+              <animateTransform
+                attributeName="transform"
+                type="rotate"
+                values={`${-45 + pressure};${-45 + pressure + 5};${-45 + pressure}`}
+                dur="1s"
+                repeatCount="indefinite"
+              />
+            </path>
+            <circle r="2" fill="#ef4444" />
+          </g>
+        ))}
+
+        {/* Delivery Line Pressures */}
+        {[225, 575].map((x, index) => (
+          <g 
+            key={`delivery-pressure-${index}`} 
+            transform={`translate(${x},220)`}
+            onMouseEnter={() => handleMouseEnter("Pressure", x, 220)}
+            onMouseLeave={handleMouseLeave}
+            style={{ cursor: 'pointer' }}
+          >
+            <circle r="12" fill="white" stroke="#16a34a" strokeWidth="2" />
+            <path
+              d="M 0,0 L 0,-10"
+              stroke="#ef4444"
+              strokeWidth="2"
+            >
+              <animateTransform
+                attributeName="transform"
+                type="rotate"
+                values={`${-45 + pressure};${-45 + pressure + 5};${-45 + pressure}`}
+                dur="1s"
+                repeatCount="indefinite"
+              />
+            </path>
+            <circle r="2" fill="#ef4444" />
+          </g>
+        ))}
+
+        {/* Destination area pressure */}
+        <g 
+          transform={`translate(820,180)`}
+          onMouseEnter={() => handleMouseEnter("Pressure", 820, 180)}
+          onMouseLeave={handleMouseLeave}
+          style={{ cursor: 'pointer' }}
+        >
+          <circle r="12" fill="white" stroke="#16a34a" strokeWidth="2" />
+          <path
+            d="M 0,0 L 0,-10"
+            stroke="#ef4444"
+            strokeWidth="2"
+          >
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              values={`${-45 + pressure};${-45 + pressure + 5};${-45 + pressure}`}
+              dur="1s"
+              repeatCount="indefinite"
+            />
+          </path>
+          <circle r="2" fill="#ef4444" />
+        </g>
+
+        {/* Hover Label */}
+        {hoveredElement && (
+          <g transform={`translate(${hoveredElement.x},${hoveredElement.y - 30})`}>
+            <text
+              x="0"
+              y="0"
+              textAnchor="middle"
+              className="text-sm font-medium fill-gray-700"
+            >
+              {hoveredElement.type}
+            </text>
+          </g>
+        )}
+
+        {/* Flow Animations */}
         <g>
           {[...Array(10)].map((_, index) => (
             <circle
@@ -207,7 +417,7 @@ export const PipelineDiagram: React.FC = () => {
           ))}
         </g>
 
-        {/* Flow Animation - Vertical Branches */}
+        {/* Vertical Branch Flow Animations */}
         {[250, 600].map((x, branchIndex) => (
           <g key={`branch-${branchIndex}`}>
             {[...Array(5)].map((_, index) => (
@@ -227,7 +437,7 @@ export const PipelineDiagram: React.FC = () => {
           </g>
         ))}
 
-        {/* Flow Animation - Source Tank to Main Line */}
+        {/* Tank Flow Animations */}
         <g>
           {[...Array(3)].map((_, i) => (
             <circle
@@ -239,13 +449,12 @@ export const PipelineDiagram: React.FC = () => {
               <animateMotion
                 dur={`${1 + i * 0.2}s`}
                 repeatCount="indefinite"
-                path="M 50,160 C 50,170 50,180 50,200"
+                path="M 50,120 C 50,150 50,180 50,200"
               />
             </circle>
           ))}
         </g>
 
-        {/* Flow Animation - Main Line to Destination Tank */}
         <g>
           {[...Array(3)].map((_, i) => (
             <circle
@@ -257,52 +466,11 @@ export const PipelineDiagram: React.FC = () => {
               <animateMotion
                 dur={`${1 + i * 0.2}s`}
                 repeatCount="indefinite"
-                path="M 850,200 C 850,180 850,170 850,160"
+                path="M 850,200 C 850,180 850,150 850,120"
               />
             </circle>
           ))}
         </g>
-
-        {/* Pressure Gauges */}
-        {[150, 500, 750].map((x, index) => (
-          <g key={`gauge-${index}`} transform={`translate(${x},140)`}>
-            <circle r="12" fill="white" stroke="#16a34a" strokeWidth="2" />
-            {[...Array(8)].map((_, i) => (
-              <line
-                key={i}
-                x1="0"
-                y1="-10"
-                x2="0"
-                y2="-12"
-                stroke="#16a34a"
-                strokeWidth="1"
-                transform={`rotate(${i * 45})`}
-              />
-            ))}
-            <path
-              d="M 0,0 L 0,-10"
-              stroke="#ef4444"
-              strokeWidth="2"
-            >
-              <animateTransform
-                attributeName="transform"
-                type="rotate"
-                values={`${-45 + pressure};${-45 + pressure + 5};${-45 + pressure}`}
-                dur="1s"
-                repeatCount="indefinite"
-              />
-            </path>
-            <circle r="2" fill="#ef4444" />
-            <text
-              x="0"
-              y="-20"
-              textAnchor="middle"
-              className="text-sm font-medium fill-gray-700"
-            >
-              Pressure
-            </text>
-          </g>
-        ))}
       </svg>
     </div>
   );

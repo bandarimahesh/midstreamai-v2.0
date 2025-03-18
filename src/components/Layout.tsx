@@ -1,16 +1,45 @@
-import React, { useState } from 'react';
-import { Link, Outlet, useLocation } from 'react-router-dom';
-import { Menu, X, Mail, Linkedin, MapPin } from 'lucide-react';
-import { ScrollToTop } from './ScrollToTop';
+import React, { useState } from "react";
+import { Link, Outlet, useLocation } from "react-router-dom";
+import { Menu, X, Mail, Linkedin, MapPin } from "lucide-react";
+import { ScrollToTop } from "./ScrollToTop";
 
 const Logo = () => (
-  <svg width="39" height="24" viewBox="0 0 39 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-2">
-    <path d="M28.667 0.105263H21.0881L22.5 5H30.0789L28.667 0.105263Z" fill="currentColor"/>
-    <path d="M27.1295 21L23.0911 7.00001H30.67L34.7085 21H27.1295Z" fill="currentColor"/>
-    <path d="M17.0789 0L21.943 17H14.364L9.5 0H17.0789Z" fill="currentColor"/>
-    <path d="M17.0861 0L11.0284 21H3.44946L9.50716 0H17.0861Z" fill="currentColor"/>
-    <rect y="20.8421" width="15.1579" height="2.84211" rx="1.42105" fill="currentColor"/>
-    <rect x="23" y="20.8421" width="15.1579" height="2.84211" rx="1.42105" fill="currentColor"/>
+  <svg
+    width="39"
+    height="24"
+    viewBox="0 0 39 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="mr-2"
+  >
+    <path
+      d="M28.667 0.105263H21.0881L22.5 5H30.0789L28.667 0.105263Z"
+      fill="currentColor"
+    />
+    <path
+      d="M27.1295 21L23.0911 7.00001H30.67L34.7085 21H27.1295Z"
+      fill="currentColor"
+    />
+    <path d="M17.0789 0L21.943 17H14.364L9.5 0H17.0789Z" fill="currentColor" />
+    <path
+      d="M17.0861 0L11.0284 21H3.44946L9.50716 0H17.0861Z"
+      fill="currentColor"
+    />
+    <rect
+      y="20.8421"
+      width="15.1579"
+      height="2.84211"
+      rx="1.42105"
+      fill="currentColor"
+    />
+    <rect
+      x="23"
+      y="20.8421"
+      width="15.1579"
+      height="2.84211"
+      rx="1.42105"
+      fill="currentColor"
+    />
   </svg>
 );
 
@@ -21,7 +50,7 @@ export const Layout: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 to-gray-100">
       <nav className="bg-white shadow-sm fixed w-full z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
               <Link
@@ -84,7 +113,7 @@ export const Layout: React.FC = () => {
         </div>
         {isMenuOpen && (
           <div className="md:hidden bg-white border-t">
-            <div className="px-2 pt-2 pb-3 space-y-1">
+            <div className="container mx-auto py-2">
               <Link
                 to="/"
                 className={`block px-3 py-2 text-gray-700 hover:bg-gray-50 ${
@@ -138,7 +167,7 @@ export const Layout: React.FC = () => {
       </main>
 
       <footer className="bg-gray-900 text-white py-12 mt-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
               <div className="flex items-center mb-4">
@@ -193,7 +222,9 @@ export const Layout: React.FC = () => {
               <div className="space-y-3">
                 <div className="flex items-center text-gray-400 hover:text-white">
                   <Mail className="h-5 w-5 mr-2" />
-                  <a href="mailto:contactus@midstreamai.com">Email</a>
+                  <a target="_blank" href="mailto:contactus@midstreamai.com">
+                    Email
+                  </a>
                 </div>
                 <div className="flex items-center text-gray-400 hover:text-white">
                   <Linkedin className="h-5 w-5 mr-2" />

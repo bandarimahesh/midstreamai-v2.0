@@ -3,8 +3,6 @@ import { AlertCircle, Box, BookOpen, GitCompare } from "lucide-react";
 import GoToTop from "../components/Utils/GoToTop";
 
 export const ServicesPage: React.FC = () => {
-  document.title = "MidstreamAI | Services";
-
   const [selectedService, setSelectedService] = useState<string | null>(
     "Leak Detection"
   );
@@ -135,12 +133,27 @@ export const ServicesPage: React.FC = () => {
     },
   };
 
+  const getServiceBackground = (serviceName: string) => {
+    switch (serviceName) {
+      case "Leak Detection":
+        return "bg-primary-50";
+      case "Batch Management":
+        return "bg-primary-50";
+      case "Product Compatibility":
+        return "bg-primary-50";
+      case "Operator Training Simulator":
+        return "bg-primary-50";
+      default:
+        return "bg-white";
+    }
+  };
+
   return (
     <>
       <div className="py-20 bg-gradient-to-br from-primary-50 to-white min-h-screen">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900">
+            <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
               Our Services
             </h1>
           </div>
@@ -153,7 +166,7 @@ export const ServicesPage: React.FC = () => {
                   <button
                     key={name}
                     onClick={() => setSelectedService(name)}
-                    className={`w-full px-6 py-4 rounded-lg text-left transition-all text-lg font-medium ${
+                    className={`w-full px-6 py-4 rounded-lg text-left transition-all ${
                       selectedService === name
                         ? "bg-primary-600 text-white shadow-md"
                         : "bg-white text-gray-700 hover:bg-primary-50"
@@ -161,7 +174,7 @@ export const ServicesPage: React.FC = () => {
                   >
                     <div className="flex items-center">
                       {services[name].icon}
-                      <span className="ml-3">{name}</span>
+                      <span className="ml-3 text-xl font-medium">{name}</span>
                     </div>
                   </button>
                 ))}
@@ -172,16 +185,20 @@ export const ServicesPage: React.FC = () => {
             <div className="lg:w-3/4">
               {selectedService && (
                 <div className="animate-fadeIn">
-                  <div className="bg-primary-100 rounded-lg p-8 shadow-md mb-8">
-                    <div className="flex items-center">
-                      <div className="p-3 bg-primary-100 rounded-lg">
+                  <div
+                    className={`rounded-2xl p-8 shadow-lg mb-8 ${getServiceBackground(
+                      selectedService
+                    )}`}
+                  >
+                    <div className="flex items-start">
+                      <div className="p-4 bg-primary-50 rounded-xl">
                         {services[selectedService].icon}
                       </div>
                       <div className="ml-6">
-                        <h2 className="text-3xl font-bold text-gray-900">
+                        <h2 className="text-4xl font-extrabold text-gray-900 mb-4">
                           {selectedService}
                         </h2>
-                        <p className="mt-2 text-xl text-gray-600">
+                        <p className="text-xl text-gray-600 leading-relaxed">
                           {services[selectedService].description}
                         </p>
                       </div>
@@ -193,10 +210,10 @@ export const ServicesPage: React.FC = () => {
                       (subService, index) => (
                         <div
                           key={index}
-                          className="bg-white p-6 rounded-lg shadow-sm hover:shadow transition-all duration-300
+                          className="bg-gradient-to-br from-primary-50 to-white p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300
                         border border-primary-50 hover:border-primary-200"
                         >
-                          <h3 className="text-2xl font-semibold text-primary-600 mb-3">
+                          <h3 className="text-2xl font-bold text-primary-600 mb-4">
                             {subService.name}
                           </h3>
                           <p className="text-lg text-gray-600">

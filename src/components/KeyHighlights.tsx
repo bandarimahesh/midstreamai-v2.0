@@ -40,10 +40,10 @@ export const KeyHighlights: React.FC = () => {
                   {highlight.icon}
                 </div>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 text-center mb-2">
+              <h3 className="text-2xl font-bold text-gray-900 text-center mb-2">
                 {highlight.title}
               </h3>
-              <p className="text-gray-600 text-center text-sm">
+              <p className="text-lg text-gray-600 text-center">
                 {highlight.description}
               </p>
             </div>

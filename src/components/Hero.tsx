@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 export const Hero: React.FC = () => {
   return (
@@ -10,12 +10,10 @@ export const Hero: React.FC = () => {
             <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
               <span className="block">Smarter Pipelines,</span>
               <span className="block text-primary-600">Safer Operations,</span>
-              <span className="block">Maximum Efficiency</span>
+              <span className="block">Optimum Efficiency</span>
             </h1>
             <p className="mt-4 text-lg text-gray-500 sm:max-w-xl lg:mx-0">
-              MidstreamAI solutions use physics-based models, AI, advanced
-              analytics, and real-time monitoring to make pipelines smarter,
-              improve safety, and maximize efficiency.
+              MidstreamAI solutions use physics-based models, AI, advanced analytics, and real-time monitoring to make pipelines smarter, improve safety, and maximize efficiency.
             </p>
             <div className="mt-6 sm:flex sm:justify-center lg:justify-start gap-4">
               <Link
@@ -75,12 +73,9 @@ export const Hero: React.FC = () => {
                 { x: 50, y: 120, type: "source", label: "Source" },
                 { x: 750, y: 120, type: "destination", label: "Destination" },
                 { x: 250, y: 320, type: "delivery", label: "Delivery Station" },
-                { x: 500, y: 320, type: "delivery", label: "Delivery Station" },
+                { x: 500, y: 320, type: "delivery", label: "Delivery Station" }
               ].map((station, index) => (
-                <g
-                  key={`tank-${index}`}
-                  transform={`translate(${station.x},${station.y})`}
-                >
+                <g key={`tank-${index}`} transform={`translate(${station.x},${station.y})`}>
                   {/* Tank Body */}
                   <rect
                     x="-25"
@@ -104,11 +99,9 @@ export const Hero: React.FC = () => {
                     <>
                       {/* Outer connection */}
                       <path
-                        d={
-                          station.type === "source"
-                            ? `M 0,0 C 0,40 0,160 0,${200 - station.y}`
-                            : `M 0,0 C 0,40 0,160 0,${200 - station.y}`
-                        }
+                        d={station.type === "source" 
+                          ? `M 0,0 C 0,40 0,160 0,${200 - station.y}`
+                          : `M 0,0 C 0,40 0,160 0,${200 - station.y}`}
                         stroke="#16a34a"
                         strokeWidth="16"
                         strokeOpacity="0.3"
@@ -116,11 +109,9 @@ export const Hero: React.FC = () => {
                       />
                       {/* Inner connection */}
                       <path
-                        d={
-                          station.type === "source"
-                            ? `M 0,0 C 0,40 0,160 0,${200 - station.y}`
-                            : `M 0,0 C 0,40 0,160 0,${200 - station.y}`
-                        }
+                        d={station.type === "source" 
+                          ? `M 0,0 C 0,40 0,160 0,${200 - station.y}`
+                          : `M 0,0 C 0,40 0,160 0,${200 - station.y}`}
                         stroke="#16a34a"
                         strokeWidth="2"
                         fill="none"
@@ -153,7 +144,7 @@ export const Hero: React.FC = () => {
                 { x: 50, y: 50, text: "Source", anchor: "middle" },
                 { x: 750, y: 50, text: "Destination", anchor: "middle" },
                 { x: 310, y: 320, text: "Delivery Station", anchor: "start" },
-                { x: 560, y: 320, text: "Delivery Station", anchor: "start" },
+                { x: 560, y: 320, text: "Delivery Station", anchor: "start" }
               ].map((label, index) => (
                 <text
                   key={`label-${index}`}
@@ -169,7 +160,12 @@ export const Hero: React.FC = () => {
               {/* Pump Station */}
               <g transform="translate(250,200)">
                 {/* Pump Circle */}
-                <circle r="15" fill="white" stroke="#16a34a" strokeWidth="2" />
+                <circle
+                  r="15"
+                  fill="white"
+                  stroke="#16a34a"
+                  strokeWidth="2"
+                />
                 {/* Pump Symbol */}
                 <path
                   d="M -8,0 C -8,-8 8,8 8,0 C 8,-8 -8,8 -8,0"
@@ -190,7 +186,12 @@ export const Hero: React.FC = () => {
               {/* Control Valve */}
               <g transform="translate(500,200)">
                 {/* Valve Body */}
-                <circle r="15" fill="white" stroke="#16a34a" strokeWidth="2" />
+                <circle
+                  r="15"
+                  fill="white"
+                  stroke="#16a34a"
+                  strokeWidth="2"
+                />
                 {/* Valve Symbol */}
                 <path
                   d="M -8,-8 L 8,8 M -8,8 L 8,-8"
@@ -211,14 +212,10 @@ export const Hero: React.FC = () => {
               {[
                 "M 50,200 L 750,200",
                 "M 250,200 L 250,320",
-                "M 500,200 L 500,320",
-              ].map((path, pathIndex) =>
+                "M 500,200 L 500,320"
+              ].map((path, pathIndex) => (
                 [...Array(5)].map((_, index) => (
-                  <circle
-                    key={`flow-${pathIndex}-${index}`}
-                    r="3"
-                    fill="#4ade80"
-                  >
+                  <circle key={`flow-${pathIndex}-${index}`} r="3" fill="#4ade80">
                     <animateMotion
                       dur={`${3 + index * 0.5}s`}
                       repeatCount="indefinite"
@@ -226,7 +223,7 @@ export const Hero: React.FC = () => {
                     />
                   </circle>
                 ))
-              )}
+              ))}
             </svg>
           </div>
         </div>
